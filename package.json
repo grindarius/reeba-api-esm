@@ -2,10 +2,17 @@
   "name": "reeba-api-esm",
   "version": "1.0.0",
   "description": "New API for reeba's website with new algorithms and documentations",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grindarius/reeba-api-esm"
+  },
   "engines": {
     "node": ">=14.16.0 || ^16"
   },
+  "engineStrict": true,
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "dev:backend": "cd packages/backend && pnpm dev",
     "test": "c8 tap --node-arg=--loader=ts-node/esm --rcfile=.taprc.yaml"
   },
   "keywords": [
@@ -13,10 +20,14 @@
     "shows",
     "self-hosted"
   ],
-  "author": "Bhattarapong Somwong",
+  "author": "Bhattarapong Somwong <numbbutt34685@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@tsconfig/node16-strictest-esm": "^1.0.3",
+    "@types/node": "^16",
+    "@types/tap": "^15.0.7",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "c8": "^7.12.0",
     "eslint": "^8.0.1",
     "eslint-config-standard-with-typescript": "^22.0.0",
     "eslint-plugin-import": "^2.25.2",
@@ -25,6 +36,9 @@
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
     "eslint-plugin-vue": "^9.4.0",
+    "nodemon": "^2.0.19",
+    "tap": "^16.3.0",
+    "ts-node": "^10.9.1",
     "typescript": "^4.7"
   }
 }

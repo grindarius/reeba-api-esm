@@ -1,0 +1,10 @@
+{
+  "watch": [
+    "./src/**/*.ts"
+  ],
+  "ignore": [
+    "node_modules",
+    "dist"
+  ],
+  "exec": "pnpm dev-serve"
+}
