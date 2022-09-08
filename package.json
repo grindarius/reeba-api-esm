@@ -1,0 +1,30 @@
+{
+  "name": "reeba-api-esm",
+  "version": "1.0.0",
+  "description": "New API for reeba's website with new algorithms and documentations",
+  "engines": {
+    "node": ">=14.16.0 || ^16"
+  },
+  "scripts": {
+    "test": "c8 tap --node-arg=--loader=ts-node/esm --rcfile=.taprc.yaml"
+  },
+  "keywords": [
+    "concerts",
+    "shows",
+    "self-hosted"
+  ],
+  "author": "Bhattarapong Somwong",
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "eslint": "^8.0.1",
+    "eslint-config-standard-with-typescript": "^22.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-simple-import-sort": "^8.0.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "eslint-plugin-vue": "^9.4.0",
+    "typescript": "^4.7"
+  }
+}
