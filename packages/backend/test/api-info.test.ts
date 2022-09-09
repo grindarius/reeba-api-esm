@@ -16,8 +16,24 @@ await t.test('getting api informations', async t => {
         url: '/'
       })
 
-      const json = response.json()
-      t.strictSame(json, {
+      t.strictSame(response.json(), {
+        author: 'Bhattarapong Somwong',
+        contributionEmail: 'numbbutt34685@gmail.com'
+      })
+    } catch (error) {
+      t.error(error)
+      t.fail()
+    }
+  })
+
+  await t.test('works with other http methods', async t => {
+    try {
+      const response = await app.inject({
+        method: 'post',
+        url: '/'
+      })
+
+      t.strictSame(response.json(), {
         author: 'Bhattarapong Somwong',
         contributionEmail: 'numbbutt34685@gmail.com'
       })

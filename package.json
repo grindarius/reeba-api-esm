@@ -13,6 +13,8 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev:backend": "cd packages/backend && pnpm dev",
+    "lint": "pnpm eslint **/*.ts",
+    "fix": "pnpm eslint **/*.ts --fix",
     "test": "c8 tap --node-arg=--loader=ts-node/esm --rcfile=.taprc.yaml"
   },
   "keywords": [
