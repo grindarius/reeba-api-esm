@@ -3,21 +3,29 @@ import { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { resolve } from 'path'
 
+import {
+  getContributionInformationReplySchema,
+  type GetContributionInformationReply
+} from '@reeba/common'
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
+const schema: FastifySchema = {
+  description: 'get API contribution information',
+  reply: getContributionInformationReplySchema
+}
+
 const route: FastifyPluginAsync = async (instance, _) => {
-  instance.all(
+  instance.all<{ Reply: GetContributionInformationReply }>(
     '/',
     {
-      schema: {
-        description: 'get api contribution information'
-      }
+      schema
     },
     () => {
       return {
         author: 'Bhatarapong Somwong',
-        contributionEmail: 'numbbutt34685@gmail.com'
+        email: 'numbbutt34685@gmail.com'
       }
     }
   )

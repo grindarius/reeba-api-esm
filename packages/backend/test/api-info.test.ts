@@ -18,7 +18,7 @@ await t.test('getting api informations', async t => {
 
       t.strictSame(response.json(), {
         author: 'Bhattarapong Somwong',
-        contributionEmail: 'numbbutt34685@gmail.com'
+        email: 'numbbutt34685@gmail.com'
       })
     } catch (error) {
       t.error(error)
@@ -35,7 +35,7 @@ await t.test('getting api informations', async t => {
 
       t.strictSame(response.json(), {
         author: 'Bhattarapong Somwong',
-        contributionEmail: 'numbbutt34685@gmail.com'
+        email: 'numbbutt34685@gmail.com'
       })
     } catch (error) {
       t.error(error)
