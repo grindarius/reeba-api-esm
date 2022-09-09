@@ -85,6 +85,11 @@ const build = async (options?: FastifyServerOptions): Promise<FastifyInstance> =
     },
     idGenerator: () => {
       return nanoid(25)
+    },
+    store: {
+      get (sessionId, callback) {},
+      set (sessionId, session, callback) {},
+      destroy (sessionId, callback) {}
     }
   })
   await app.register(helmet)
