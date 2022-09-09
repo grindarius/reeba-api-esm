@@ -12,6 +12,7 @@
   "exports": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
+    "dev": "nodemon",
     "build": "tsc -p ./tsconfig.build.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

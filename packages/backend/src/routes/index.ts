@@ -1,11 +1,11 @@
-import type { FastifyPluginAsync } from 'fastify'
+import type { FastifyPluginAsync, FastifySchema } from 'fastify'
 import { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { resolve } from 'path'
 
 import {
-  getContributionInformationReplySchema,
-  type GetContributionInformationReply
+  type GetContributionInformationReply,
+  getContributionInformationReplySchema
 } from '@reeba/common'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -13,22 +13,18 @@ const __dirname = dirname(__filename)
 
 const schema: FastifySchema = {
   description: 'get API contribution information',
-  reply: getContributionInformationReplySchema
+  response: {
+    '2xx': getContributionInformationReplySchema
+  }
 }
 
 const route: FastifyPluginAsync = async (instance, _) => {
-  instance.all<{ Reply: GetContributionInformationReply }>(
-    '/',
-    {
-      schema
-    },
-    () => {
-      return {
-        author: 'Bhatarapong Somwong',
-        email: 'numbbutt34685@gmail.com'
-      }
+  instance.get<{ Reply: GetContributionInformationReply }>('/', { schema }, () => {
+    return {
+      author: 'Bhatarapong Somwong',
+      email: 'numbbutt34685@gmail.com'
     }
-  )
+  })
 
   instance.get(
     '/favicon.ico',

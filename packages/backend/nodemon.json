@@ -1,14 +1,12 @@
 {
   "watch": [
-    "./src/**/*.ts"
+    "src",
+    "../common/src"
   ],
-  "ext": [
-    "js",
-    "ts"
-  ],
+  "ext": "js,ts",
   "ignore": [
     "node_modules",
     "dist"
   ],
-  "exec": "pnpm -w run build:common && pnpm kill-port --port 3000 && pnpm dev-serve"
+  "exec": "pnpm -w run build:common && pnpm kill-port --port 3000 && pnpm ts-node --esm ./src/server.ts"
 }

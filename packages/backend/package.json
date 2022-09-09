@@ -13,7 +13,6 @@
   "types": "./dist/server.d.ts",
   "scripts": {
     "dev": "nodemon",
-    "dev-serve": "ts-node --esm ./src/server.ts",
     "build": "tsc -p ./tsconfig.build.json"
   },
   "author": "Bhattarapong Somwong <numbbutt34685@gmail.com>",
@@ -31,6 +30,7 @@
     "@reeba/common": "workspace:^1.0.0",
     "dotenv-flow": "^3.2.0",
     "fastify": "^4.5",
+    "nanoid": "^4.0.0",
     "pg": "^8.8.0"
   },
   "devDependencies": {

@@ -1,5 +1,6 @@
 import dotenv from 'dotenv-flow'
 import { type FastifyInstance, type FastifyServerOptions, fastify } from 'fastify'
+import { nanoid } from 'nanoid'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -8,6 +9,7 @@ import cors from '@fastify/cors'
 import helmet from '@fastify/helmet'
 import multipart from '@fastify/multipart'
 import postgres from '@fastify/postgres'
+import session from '@fastify/session'
 import servestatic from '@fastify/static'
 import swagger from '@fastify/swagger'
 
@@ -63,11 +65,27 @@ const build = async (options?: FastifyServerOptions): Promise<FastifyInstance> =
     throw new Error('missing cookie secret')
   }
 
+  const argon2Secret = process.env['REEBA_ARGON2_SECRET']
+
+  if (argon2Secret == null || argon2Secret === '') {
+    throw new Error('missing argon2 secret')
+  }
+
   const app = fastify(options)
 
   await app.register(cors)
-  await app.register(cookie, {
-    secret: cookieSecret
+  await app.register(cookie)
+  await app.register(session, {
+    secret: cookieSecret,
+    cookie: {
+      // * 6 hours session
+      maxAge: 1000 * 60 * 60 * 6,
+      secure: false,
+      httpOnly: true
+    },
+    idGenerator: () => {
+      return nanoid(25)
+    }
   })
   await app.register(helmet)
   await app.register(multipart)
