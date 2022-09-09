@@ -3,6 +3,7 @@ import { type FastifyInstance, type FastifyServerOptions, fastify } from 'fastif
 import { nanoid } from 'nanoid'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { Pool } from 'pg'
 
 import cookie from '@fastify/cookie'
 import cors from '@fastify/cors'
@@ -87,7 +88,35 @@ const build = async (options?: FastifyServerOptions): Promise<FastifyInstance> =
       return nanoid(25)
     },
     store: {
-      get (sessionId, callback) {},
+      get (sessionId, callback) {
+        const pool = new Pool({
+          user: pgUsername,
+          password: pgPassword,
+          host: pgHost,
+          port: Number(pgPort),
+          database: pgDatabaseName
+        })
+
+        pool.connect((error, client, done) => {
+          if (error != null) {
+            throw error
+          }
+
+          client.query(
+            'select * from "user_sessions" where user_session_id = $1',
+            [sessionId],
+            (error, result) => {
+              if (error != null) {
+                throw error
+              }
+
+              callback(null, result.rows[0])
+            }
+          )
+
+          done()
+        })
+      },
       set (sessionId, session, callback) {},
       destroy (sessionId, callback) {}
     }
