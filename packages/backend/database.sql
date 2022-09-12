@@ -13,8 +13,7 @@ create table "users" (
 
 create table "user_sessions" (
   user_session_id text not null unique,
-  user_id text not null,
-  session_start_time date not null,
-  primary key (user_session_id),
-  foreign key (user_id) references users(user_id)
+  user_session_data jsonb not null,
+  user_session_end_datetime timestamptz not null,
+  primary key (user_session_id)
 );

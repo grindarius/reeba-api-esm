@@ -72,6 +72,14 @@ const build = async (options?: FastifyServerOptions): Promise<FastifyInstance> =
     throw new Error('missing argon2 secret')
   }
 
+  const pool = new Pool({
+    user: pgUsername,
+    password: pgPassword,
+    host: pgHost,
+    port: Number(pgPort),
+    database: pgDatabaseName
+  })
+
   const app = fastify(options)
 
   await app.register(cors)
@@ -89,20 +97,16 @@ const build = async (options?: FastifyServerOptions): Promise<FastifyInstance> =
     },
     store: {
       get (sessionId, callback) {
-        const pool = new Pool({
-          user: pgUsername,
-          password: pgPassword,
-          host: pgHost,
-          port: Number(pgPort),
-          database: pgDatabaseName
-        })
-
         pool.connect((error, client, done) => {
           if (error != null) {
             throw error
           }
 
-          client.query(
+          client.query<{
+            user_session_id: string
+            user_session_data: object
+            user_session_start_datetime: string
+          }>(
             'select * from "user_sessions" where user_session_id = $1',
             [sessionId],
             (error, result) => {
