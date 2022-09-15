@@ -164,7 +164,7 @@ const build = async (options?: FastifyServerOptions): Promise<FastifyInstance> =
   await app.ready()
   app.swagger()
 
-  return await app
+  return app
 }
 
 export default build
