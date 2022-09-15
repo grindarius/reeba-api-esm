@@ -10,28 +10,30 @@ import {
 import { argon2Options, NANOID_USER_ID_LENGTH } from '../../constants/index.js'
 
 const schema: FastifySchema = {
-  description: 'Signup for new user',
+  description: 'Signup for a new user',
   body: signupBodySchema
 }
 
-const plugin: FastifyPluginAsync = async (instance, _) => {
+const route: FastifyPluginAsync = async (instance, _) => {
   instance.post<{ Body: SignupBody }>(
     '/auth/signup',
     { schema },
     async (request, _) => {
-      const encryptedPassword = await hash(request.body.password, argon2Options)
+      const { username, email, password } = request.body
 
-      await instance.pg.query<[string, string, string, string]>(
+      const encryptedPassword = await hash(password, argon2Options)
+
+      await instance.pg.query<{}, [string, string, string, string]>(
         'insert into "users" (user_id, user_username, user_email, user_password) values ($1, $2, $3, $4)',
-        [nanoid(NANOID_USER_ID_LENGTH), request.body.username, request.body.email, encryptedPassword]
+        [nanoid(NANOID_USER_ID_LENGTH), username, email, encryptedPassword]
       )
 
       return {
         statusCode: '200',
-        message: 'successfully signed up.'
+        message: 'successfully signed up'
       }
     }
   )
 }
 
-export default plugin
+export default route

@@ -1,16 +1,12 @@
 import dotenv from 'dotenv-flow'
 import { type FastifyInstance, type FastifyServerOptions, fastify } from 'fastify'
-import { nanoid } from 'nanoid'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { Pool } from 'pg'
 
-import cookie from '@fastify/cookie'
 import cors from '@fastify/cors'
 import helmet from '@fastify/helmet'
 import multipart from '@fastify/multipart'
 import postgres from '@fastify/postgres'
-import session from '@fastify/session'
 import servestatic from '@fastify/static'
 import swagger from '@fastify/swagger'
 
@@ -72,59 +68,11 @@ const build = async (options?: FastifyServerOptions): Promise<FastifyInstance> =
     throw new Error('missing argon2 secret')
   }
 
-  const pool = new Pool({
-    user: pgUsername,
-    password: pgPassword,
-    host: pgHost,
-    port: Number(pgPort),
-    database: pgDatabaseName
-  })
+  const connectionString = `postgres://${pgUsername}:${pgPassword}@${pgHost}:${pgPort}/${pgDatabaseName}`
 
   const app = fastify(options)
 
   await app.register(cors)
-  await app.register(cookie)
-  await app.register(session, {
-    secret: cookieSecret,
-    cookie: {
-      // * 6 hours session
-      maxAge: 1000 * 60 * 60 * 6,
-      secure: false,
-      httpOnly: true
-    },
-    idGenerator: () => {
-      return nanoid(25)
-    },
-    store: {
-      get (sessionId, callback) {
-        pool.connect((error, client, done) => {
-          if (error != null) {
-            throw error
-          }
-
-          client.query<{
-            user_session_id: string
-            user_session_data: object
-            user_session_start_datetime: string
-          }>(
-            'select * from "user_sessions" where user_session_id = $1',
-            [sessionId],
-            (error, result) => {
-              if (error != null) {
-                throw error
-              }
-
-              callback(null, result.rows[0])
-            }
-          )
-
-          done()
-        })
-      },
-      set (sessionId, session, callback) {},
-      destroy (sessionId, callback) {}
-    }
-  })
   await app.register(helmet)
   await app.register(multipart)
   await app.register(servestatic, {
@@ -132,7 +80,7 @@ const build = async (options?: FastifyServerOptions): Promise<FastifyInstance> =
     prefix: '/uploads/'
   })
   await app.register(postgres, {
-    connectionString: `postgres://${pgUsername}:${pgPassword}@${pgHost}:${pgPort}/${pgDatabaseName}`
+    connectionString
   })
   await app.register(swagger, {
     routePrefix: '/docs',
@@ -164,7 +112,7 @@ const build = async (options?: FastifyServerOptions): Promise<FastifyInstance> =
   await app.ready()
   app.swagger()
 
-  return app
+  return await app
 }
 
 export default build

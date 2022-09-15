@@ -18,12 +18,10 @@
   "author": "Bhattarapong Somwong <numbbutt34685@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@fastify/cookie": "^8.1.0",
     "@fastify/cors": "^8.1.0",
     "@fastify/helmet": "^10.0.0",
     "@fastify/multipart": "^7.1.2",
     "@fastify/postgres": "^5.1.0",
-    "@fastify/session": "^10.0.0",
     "@fastify/static": "^6.5.0",
     "@fastify/swagger": "^7.5.1",
     "@node-rs/argon2": "^1.2.0",

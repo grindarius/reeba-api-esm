@@ -15,6 +15,7 @@
     "dev:backend": "cd packages/backend && pnpm dev",
     "build:backend": "cd packages/backend && pnpm build",
     "build:common": "cd packages/common && pnpm build",
+    "build:fastify-check-jwt": "cd packages/fastify-check-jwt && pnpm build",
     "lint": "pnpm eslint **/*.ts",
     "fix": "pnpm eslint **/*.ts --fix",
     "test": "c8 tap --node-arg=--loader=ts-node/esm --rcfile=.taprc.yaml"

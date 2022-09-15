@@ -1,0 +1,26 @@
+{
+  "name": "@reeba/fastify-check-jwt",
+  "version": "1.0.0",
+  "private": true,
+  "description": "jwt options for fastify",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grindarius/reeba-api-esm",
+    "directory": "packages/fastify-check-jwt"
+  },
+  "type": "module",
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p ./tsconfig.json"
+  },
+  "author": "Bhattarapong Somwong <numbbutt34685@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@fastify/jwt": "^6.3.2",
+    "fastify-plugin": "^4.2"
+  },
+  "devDependencies": {
+    "fastify": "^4.5"
+  }
+}

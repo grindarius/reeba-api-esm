@@ -8,6 +8,8 @@ import {
   getContributionInformationReplySchema
 } from '@reeba/common'
 
+import authen from './authen/index.js'
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
@@ -19,6 +21,8 @@ const schema: FastifySchema = {
 }
 
 const route: FastifyPluginAsync = async (instance, _) => {
+  await instance.register(authen)
+
   instance.get<{ Reply: GetContributionInformationReply }>('/', { schema }, () => {
     return {
       author: 'Bhatarapong Somwong',
