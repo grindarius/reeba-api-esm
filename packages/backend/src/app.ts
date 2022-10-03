@@ -9,6 +9,7 @@ import multipart from '@fastify/multipart'
 import postgres from '@fastify/postgres'
 import servestatic from '@fastify/static'
 import swagger from '@fastify/swagger'
+import jwt from '@reeba/fastify-check-jwt'
 
 import routes from './routes/index.js'
 
@@ -106,6 +107,9 @@ const build = async (options?: FastifyServerOptions): Promise<FastifyInstance> =
       deepLinking: false
     },
     exposeRoute: true
+  })
+  await app.register(jwt, {
+    secret: 'who'
   })
   await app.register(routes)
 

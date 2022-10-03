@@ -9,6 +9,6 @@ export const argon2Options: Argon2Options = {
   algorithm: Algorithm.Argon2id,
   version: Version.V0x13,
   timeCost: 12,
-  outputLen: 64,
-  parallelism: 6
+  outputLen: 128,
+  parallelism: 4
 }
