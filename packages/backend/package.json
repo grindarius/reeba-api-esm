@@ -28,7 +28,7 @@
     "@reeba/common": "workspace:^1.0.0",
     "dayjs": "^1.11.5",
     "dotenv-flow": "^3.2.0",
-    "fastify": "^4.5",
+    "fastify": "~4.5",
     "nanoid": "^4.0.0",
     "pg": "^8.8.0"
   },
